@@ -1,14 +1,22 @@
-# Focal Loss for Dense  Rotation Object Detection
+# Focal Loss for Dense Rotation Object Detection
 
 ## Abstract
 This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/pdf/1708.02002.pdf), and it is completed by [YangXue](https://github.com/yangxue0827).
 
-### Performance
-| Model |    Backbone    |    Training data    |    Val data    |    mAP   | GPU | Image/GPU | Anchor | Reg. Loss| configs |
-|:------------:|:------------:|:------------:|:---------:|:-----------:|:----------:|:-----------:|:---------:|:---------:|:---------:|
-| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.79 | 8X GeForce RTX 2080 Ti | 1 | H | smooth L1 | cfgs_res50_dota_v11.py |
-| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.02 | 1X GeForce RTX 2080 Ti | 1 | R | smooth L1 | cfgs_res50_dota_v1.py |
-| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 63.45 | 1X GeForce RTX 2080 Ti | 1 | R | IoU-smooth L1 | cfgs_res50_dota_v8.py |
+## Performance
+### DOTA1.0
+| Model |    Backbone    |    Training data    |    Val data    |    mAP   | GPU | Image/GPU | Anchor | Reg. Loss| lr schd | Angle Constraint | Data Augmentation | configs |
+|:------------:|:------------:|:------------:|:---------:|:-----------:|:----------:|:-----------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 53.17 | 8X GeForce RTX 2080 Ti | 1 | H | smooth L1 | 1x | No | No | cfgs_res50_dota_v3.py |
+| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.22 | **1X** GeForce RTX 2080 Ti | 1 | H | smooth L1 | 1x | No | No | cfgs_res50_dota_v4.py |
+| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.79 | 8X GeForce RTX 2080 Ti | 1 | H | smooth L1 | **2x** | No | No | cfgs_res50_dota_v8.py |
+| RetinaNet (baseline) | ResNet50_v1 **800->1024** | DOTA1.0 trainval | DOTA1.0 test | 60.32 | 8X GeForce RTX 2080 Ti | 1 | H | smooth L1 | 2x | No | No | cfgs_res50_dota_v14.py |
+| RetinaNet (baseline) | **ResNet101_v1** 600->800 | DOTA1.0 trainval | DOTA1.0 test | 64.19 | 1X GeForce RTX 2080 Ti | 1 | H | smooth L1 | 1x | No | No | cfgs_res101_dota_v9.py |
+| RetinaNet (baseline) | **ResNet152_v1** 600->800 | DOTA1.0 trainval | DOTA1.0 test | 65.79 | 8X GeForce RTX 2080 Ti | 1 | H | smooth L1 | 2x | No | No | cfgs_res152_dota_v12.py |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |
+| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 61.94 | 1X GeForce RTX 2080 Ti | 1 | R | smooth L1 | 1x | No | No | cfgs_res50_dota_v1.py |
+| RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.25 | **8X** GeForce RTX 2080 Ti | 1 | R | smooth L1 | **2x** | No | No | cfgs_res50_dota_v10.py |
+| RetinaNet | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.69 | 1X GeForce RTX 2080 Ti | 1 | R | **iou-smooth L1** | 1x | No | No | cfgs_res50_dota_v5.py |
 
 ![1](demo1.png)
 
@@ -16,17 +24,17 @@ This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/
 
 ## My Development Environment
 1、python3.5 (anaconda recommend)               
-2、cuda9.0                     
-3、[opencv(cv2)](https://pypi.org/project/opencv-python/)    
-4、[tfplot](https://github.com/wookayin/tensorflow-plot) (optional)            
-5、tensorflow >= 1.12
-                   
+2、cuda 9.0                     
+3、[opencv(cv2)](https://pypi.org/project/opencv-python/)       
+4、[tfplot 0.2.0](https://github.com/wookayin/tensorflow-plot) (optional)            
+5、tensorflow 1.12       
+              
 ## IoU-smooth L1 Loss
 **[SCRDet: Towards More Robust Detection for Small, Cluttered and Rotated Objects (ICCV2019)]()**    
 
 ![1](example.png)
 
-![2](iou_smooth_l1_loss.png)                
+![2](iou_smooth_l1_loss.png)             
 
 ## Download Model
 ### Pretrain weights
@@ -95,4 +103,4 @@ tensorboard --logdir=.
 1、https://github.com/endernewton/tf-faster-rcnn   
 2、https://github.com/zengarden/light_head_rcnn   
 3、https://github.com/tensorflow/models/tree/master/research/object_detection    
-4、https://github.com/fizyr/keras-retinanet
+4、https://github.com/fizyr/keras-retinanet     
