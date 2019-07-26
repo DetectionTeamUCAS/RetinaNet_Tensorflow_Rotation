@@ -96,9 +96,9 @@ def iou_rotate_calculate2(boxes1, boxes2):
 if __name__ == '__main__':
     import os
     # os.environ["CUDA_VISIBLE_DEVICES"] = '13'
-    boxes1 = np.array([[50, 50, 25, 100, -45]], np.float32)
+    boxes1 = np.array([[50, 50, 10, 70, -45]], np.float32)
 
-    boxes2 = np.array([[60, 60, 100, 25, -135]], np.float32)
+    boxes2 = np.array([[50, 50, 10, 70, -50]], np.float32)
 
     print(iou_rotate_calculate2(boxes1, boxes2))
 

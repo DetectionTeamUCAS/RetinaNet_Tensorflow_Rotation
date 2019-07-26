@@ -5,22 +5,25 @@ import tensorflow.contrib.slim as slim
 
 from libs.configs import cfgs
 from libs.networks.resnet import fusion_two_layer
-from libs.networks.nas_fpn import nas_fpn, fpn
 DATA_FORMAT = "NHWC"
 DEBUG = False
 debug_dict = {}
 BottleNeck_NUM_DICT = {
     'resnet50_v1b': [3, 4, 6, 3],
     'resnet101_v1b': [3, 4, 23, 3],
+    'resnet152_v1b': [3, 8, 36, 3],
     'resnet50_v1d': [3, 4, 6, 3],
-    'resnet101_v1d': [3, 4, 23, 3]
+    'resnet101_v1d': [3, 4, 23, 3],
+    'resnet152_v1d': [3, 8, 36, 3]
 }
 
 BASE_CHANNELS_DICT = {
     'resnet50_v1b': [64, 128, 256, 512],
     'resnet101_v1b': [64, 128, 256, 512],
+    'resnet152_v1b': [64, 128, 256, 512],
     'resnet50_v1d': [64, 128, 256, 512],
-    'resnet101_v1d': [64, 128, 256, 512]
+    'resnet101_v1d': [64, 128, 256, 512],
+    'resnet152_v1d': [64, 128, 256, 512]
 }
 
 
@@ -230,7 +233,7 @@ def resnet_base(img_batch, scope_name, is_training=True):
                             activation_fn=None, normalizer_fn=None):
 
             P5 = slim.conv2d(feature_dict['C5'],
-                             num_outputs=cfgs.FPN_CHANNEL,
+                             num_outputs=256,
                              kernel_size=[1, 1],
                              stride=1, scope='build_P5')
 
@@ -243,31 +246,24 @@ def resnet_base(img_batch, scope_name, is_training=True):
                                                                scope='build_P%d' % level)
             for level in range(5, 2, -1):
                 pyramid_dict['P%d' % level] = slim.conv2d(pyramid_dict['P%d' % level],
-                                                          num_outputs=cfgs.FPN_CHANNEL,
-                                                          kernel_size=[3, 3], padding="SAME",
+                                                          num_outputs=256, kernel_size=[3, 3], padding="SAME",
                                                           stride=1, scope="fuse_P%d" % level)
 
             p6 = slim.conv2d(pyramid_dict['P5'] if cfgs.USE_P5 else feature_dict['C5'],
-                             num_outputs=cfgs.FPN_CHANNEL, kernel_size=[3, 3], padding="SAME",
+                             num_outputs=256, kernel_size=[3, 3], padding="SAME",
                              stride=2, scope='p6_conv')
             pyramid_dict['P6'] = p6
 
             p7 = tf.nn.relu(p6, name='p6_relu')
 
             p7 = slim.conv2d(p7,
-                             num_outputs=cfgs.FPN_CHANNEL, kernel_size=[3, 3], padding="SAME",
+                             num_outputs=256, kernel_size=[3, 3], padding="SAME",
                              stride=2, scope='p7_conv')
 
             pyramid_dict['P7'] = p7
 
     # for level in range(7, 1, -1):
     #     add_heatmap(pyramid_dict['P%d' % level], name='Layer%d/P%d_heat' % (level, level))
-
-    for i in range(cfgs.NUM_FPN):
-        pyramid_dict = fpn(pyramid_dict, i)
-
-    for i in range(cfgs.NUM_NAS_FPN):
-        pyramid_dict = nas_fpn(pyramid_dict, i)
 
     return pyramid_dict
 

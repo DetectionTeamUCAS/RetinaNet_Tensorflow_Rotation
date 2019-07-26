@@ -165,7 +165,7 @@ def worker(gpu_id, images, det_net, args, result_queue):
             result_queue.put_nowait(result_dict)
 
 
-def test_dota(det_net, real_test_img_list, args):
+def test_dota(det_net, real_test_img_list, args, txt_name):
 
     save_path = os.path.join('./test_dota', cfgs.VERSION)
 
@@ -234,7 +234,7 @@ def test_dota(det_net, real_test_img_list, args):
                     continue
                 write_handle[sub_class].close()
 
-            fw = open('./tmp.txt', 'a+')
+            fw = open(txt_name, 'a+')
             fw.write('{}\n'.format(res['image_id'].split('/')[-1]))
             fw.close()
 
@@ -248,12 +248,13 @@ def test_dota(det_net, real_test_img_list, args):
 
 def eval(num_imgs, args):
 
+    txt_name = '{}.txt'.format(cfgs.VERSION)
     if not args.show_box:
-        if not os.path.exists('./tmp.txt'):
-            fw = open('./tmp.txt', 'w')
+        if not os.path.exists(txt_name):
+            fw = open(txt_name, 'w')
             fw.close()
 
-        fr = open('./tmp.txt', 'r')
+        fr = open(txt_name, 'r')
         img_filter = fr.readlines()
         print('****************************'*3)
         print('Already tested imgs:', img_filter)
@@ -277,15 +278,15 @@ def eval(num_imgs, args):
 
     retinanet = build_whole_network.DetectionNetwork(base_network_name=cfgs.NET_NAME,
                                                      is_training=False)
-    test_dota(det_net=retinanet, real_test_img_list=real_test_img_list, args=args)
+    test_dota(det_net=retinanet, real_test_img_list=real_test_img_list, args=args, txt_name=txt_name)
 
     if not args.show_box:
-        os.remove('./tmp.txt')
+        os.remove(txt_name)
 
 
 def parse_args():
 
-    parser = argparse.ArgumentParser('evaluate the result with Pascal2007 stdand')
+    parser = argparse.ArgumentParser('evaluate the result with Pascal2007 strand')
 
     parser.add_argument('--test_dir', dest='test_dir',
                         help='evaluate imgs dir ',
@@ -322,22 +323,5 @@ if __name__ == '__main__':
     print(20*"--")
     eval(args.eval_num,
          args=args)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -12,11 +12,11 @@ from libs.configs import cfgs
 import numpy as np
 from libs.box_utils.cython_utils.cython_bbox import bbox_overlaps
 from libs.box_utils.rbbox_overlaps import rbbx_overlaps
-from libs.box_utils.iou_rotate_approximate import iou_rotate
+from libs.box_utils.iou_cpu import get_iou_matrix
 from libs.box_utils import bbox_transform
 
 
-def anchor_target_layer(gt_boxes_h, gt_boxes_r, anchors, gpu_id):
+def anchor_target_layer(gt_boxes_h, gt_boxes_r, anchors, gpu_id=0):
 
     anchor_states = np.zeros((anchors.shape[0],))
     labels = np.zeros((anchors.shape[0], cfgs.CLASS_NUM))
@@ -29,6 +29,9 @@ def anchor_target_layer(gt_boxes_h, gt_boxes_r, anchors, gpu_id):
         else:
             overlaps = rbbx_overlaps(np.ascontiguousarray(anchors, dtype=np.float32),
                                      np.ascontiguousarray(gt_boxes_r[:, :-1], dtype=np.float32), gpu_id)
+
+            # overlaps = get_iou_matrix(np.ascontiguousarray(anchors, dtype=np.float32),
+            #                           np.ascontiguousarray(gt_boxes_r[:, :-1], dtype=np.float32))
 
         argmax_overlaps_inds = np.argmax(overlaps, axis=1)
         max_overlaps = overlaps[np.arange(overlaps.shape[0]), argmax_overlaps_inds]
@@ -49,6 +52,7 @@ def anchor_target_layer(gt_boxes_h, gt_boxes_r, anchors, gpu_id):
         else:
             positive_indices = max_overlaps >= cfgs.IOU_POSITIVE_THRESHOLD
             ignore_indices = (max_overlaps > cfgs.IOU_NEGATIVE_THRESHOLD) & ~positive_indices
+
         anchor_states[ignore_indices] = -1
         anchor_states[positive_indices] = 1
 

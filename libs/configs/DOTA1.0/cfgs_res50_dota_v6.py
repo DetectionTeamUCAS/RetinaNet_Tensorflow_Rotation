@@ -5,33 +5,7 @@ import tensorflow as tf
 import math
 
 """
-This is your evaluation result for task 1:
-
-    mAP: 0.5480507692338451
-    ap of each class:
-    plane:0.8599566695864165,
-    baseball-diamond:0.5610693717666839,
-    bridge:0.31743835491791117,
-    ground-track-field:0.45644113610131876,
-    small-vehicle:0.6656627784884313,
-    large-vehicle:0.6903266517095354,
-    ship:0.69072175498794,
-    tennis-court:0.9069932686569507,
-    basketball-court:0.681722679356112,
-    storage-tank:0.7272720542084461,
-    soccer-ball-field:0.23741514552465467,
-    roundabout:0.5117410856867458,
-    harbor:0.4274765002322546,
-    swimming-pool:0.44701729322205713,
-    helicopter:0.039506794062220456
-
-The submitted information is :
-
-Description: RetinaNet_DOTA_1x_20190601
-Username: DetectionTeamCSU
-Institute: CSU
-Emailadress: yangxue@csu.edu.cn
-TeamMembers: YangXue
+v5 + multi-gpu
 
 """
 
@@ -44,7 +18,7 @@ ADD_BOX_IN_TENSORBOARD = True
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "0"
+GPU_GROUP = "0,1,2,3,4,5,6,7"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
@@ -75,7 +49,7 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0
-USE_IOU_FACTOR = False
+USE_IOU_FACTOR = True
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
@@ -83,7 +57,7 @@ MOMENTUM = 0.9
 LR = 5e-4  # * NUM_GPU * BATCH_SIZE
 DECAY_STEP = [SAVE_WEIGHTS_INTE*12, SAVE_WEIGHTS_INTE*16, SAVE_WEIGHTS_INTE*20]
 MAX_ITERATION = SAVE_WEIGHTS_INTE*20
-WARM_SETP = int(1.0 / 8.0 * SAVE_WEIGHTS_INTE)
+WARM_SETP = int(1.0 / 0.5 * SAVE_WEIGHTS_INTE)
 
 # -------------------------------------------- Data_preprocess_config
 DATASET_NAME = 'DOTA'  # 'pascal', 'coco'
@@ -105,10 +79,10 @@ WEIGHT_DECAY = 1e-4
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
 BASE_ANCHOR_SIZE_LIST = [32, 64, 128, 256, 512]
 ANCHOR_STRIDE = [8, 16, 32, 64, 128]
-ANCHOR_SCALES = [1.0]  # [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
+ANCHOR_SCALES = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
 ANCHOR_RATIOS = [1, 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
-ANCHOR_SCALE_FACTORS = None
+ANCHOR_SCALE_FACTORS = [10.0, 10.0, 5.0, 5.0, 5.0]
 USE_CENTER_OFFSET = True
 METHOD = 'R'
 USE_ANGLE_COND = False
@@ -120,15 +94,9 @@ IOU_POSITIVE_THRESHOLD = 0.5
 IOU_NEGATIVE_THRESHOLD = 0.4
 
 NMS = True
-NMS_IOU_THRESHOLD = 0.5
+NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
-
-# --------------------------------------------NAS FPN config
-NUM_FPN = 0
-NUM_NAS_FPN = 3
-USE_RELU = True
-FPN_CHANNEL = 256
 
 

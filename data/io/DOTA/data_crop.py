@@ -141,8 +141,8 @@ def format_label(txt_list):
 def clip_image(file_idx, image, boxes_all, width, height):
     if len(boxes_all) > 0:
         shape = image.shape
-        for start_h in range(0, shape[0], 600):
-            for start_w in range(0, shape[1], 600):
+        for start_h in range(0, shape[0], 450):
+            for start_w in range(0, shape[1], 450):
                 boxes = copy.deepcopy(boxes_all)
                 box = np.zeros_like(boxes_all)
                 start_h_new = start_h
@@ -187,11 +187,11 @@ def clip_image(file_idx, image, boxes_all, width, height):
 
 
 print('class_list', len(class_list))
-raw_data = '/data/DOTA/val/'
-raw_images_dir = os.path.join(raw_data, 'images')
+raw_data = '/data/DOTA/train/'
+raw_images_dir = os.path.join(raw_data, 'images', 'images')
 raw_label_dir = os.path.join(raw_data, 'labelTxt')
 
-save_dir = '/data/DOTA/DOTA_TOTAL/train800/'
+save_dir = '/data/DOTA/DOTA_TOTAL/train/'
 
 images = [i for i in os.listdir(raw_images_dir) if 'png' in i]
 labels = [i for i in os.listdir(raw_label_dir) if 'txt' in i]

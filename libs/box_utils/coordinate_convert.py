@@ -14,6 +14,7 @@ def forward_convert(coordinate, with_label=True):
     :param coordinate: format [x_c, y_c, w, h, theta]
     :return: format [x1, y1, x2, y2, x3, y3, x4, y4]
     """
+
     boxes = []
     if with_label:
         for rect in coordinate:
@@ -119,4 +120,4 @@ if __name__ == '__main__':
     # coord3 = coordinate_present_convert(coord, -1)
     # print(coord3)
     # coord4 = coordinate_present_convert(coord3, mode=1)
-    # print(coord4)
+# print(coord4)

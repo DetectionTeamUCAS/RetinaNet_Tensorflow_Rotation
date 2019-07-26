@@ -5,38 +5,40 @@ import tensorflow as tf
 import math
 
 """
+v1 + iou-smooth l1 loss
+
 This is your evaluation result for task 1:
 
-    mAP: 0.5866301607909417
+    mAP: 0.6268548346359429
     ap of each class:
-    plane:0.8806854843344094,
-    baseball-diamond:0.6414287490094722,
-    bridge:0.3300293456230073,
-    ground-track-field:0.4776408507580345,
-    small-vehicle:0.6646805242449142,
-    large-vehicle:0.726467776494619,
-    ship:0.7480136213421558,
-    tennis-court:0.9084789555993746,
-    basketball-court:0.7112158921814483,
-    storage-tank:0.7721190892693972,
-    soccer-ball-field:0.3115687743447499,
-    roundabout:0.5416910915305044,
-    harbor:0.47025612310463516,
-    swimming-pool:0.48603974534214556,
-    helicopter:0.12913638868525892
+    plane:0.8895825055572971,
+    baseball-diamond:0.7073737982937115,
+    bridge:0.3381533779272945,
+    ground-track-field:0.5521961704033014,
+    small-vehicle:0.6609319727158001,
+    large-vehicle:0.7426839559004066,
+    ship:0.7579255726899046,
+    tennis-court:0.9088181136193141,
+    basketball-court:0.7689951749127535,
+    storage-tank:0.7528551753726186,
+    soccer-ball-field:0.44336695504841234,
+    roundabout:0.5975627198652913,
+    harbor:0.5372426737549206,
+    swimming-pool:0.580320559526996,
+    helicopter:0.16481379395112153
 
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190605
-Username: yangxue
-Institute: DetectionTeamUCAS
-Emailadress: yangxue16@mails.ucas.ac.cn
-TeamMembers: yangxue, yangjirui
+Description: RetinaNet_DOTA_1x_20190531_54w
+Username: DetectionTeamCSU
+Institute: CSU
+Emailadress: yangxue@csu.edu.cn
+TeamMembers: YangXue
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190605'
+VERSION = 'RetinaNet_DOTA_1x_20190531'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -48,7 +50,7 @@ GPU_GROUP = "0"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
-SAVE_WEIGHTS_INTE = 18000
+SAVE_WEIGHTS_INTE = 27000
 
 SUMMARY_PATH = ROOT_PATH + '/output/summary'
 TEST_SAVE_PATH = ROOT_PATH + '/tools/test_result'
@@ -75,7 +77,7 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0
-USE_IOU_FACTOR = False
+USE_IOU_FACTOR = True
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
@@ -86,7 +88,7 @@ MAX_ITERATION = SAVE_WEIGHTS_INTE*20
 WARM_SETP = int(1.0 / 8.0 * SAVE_WEIGHTS_INTE)
 
 # -------------------------------------------- Data_preprocess_config
-DATASET_NAME = 'DOTA800'  # 'pascal', 'coco'
+DATASET_NAME = 'DOTA'  # 'pascal', 'coco'
 PIXEL_MEAN = [123.68, 116.779, 103.939]  # R, G, B. In tf, channel is RGB. In openCV, channel is BGR
 PIXEL_MEAN_ = [0.485, 0.456, 0.406]
 PIXEL_STD = [0.229, 0.224, 0.225]  # R, G, B. In tf, channel is RGB. In openCV, channel is BGR
@@ -100,12 +102,13 @@ SUBNETS_BIAS_INITIALIZER = tf.constant_initializer(value=0.0)
 PROBABILITY = 0.01
 FINAL_CONV_BIAS_INITIALIZER = tf.constant_initializer(value=-math.log((1.0 - PROBABILITY) / PROBABILITY))
 WEIGHT_DECAY = 1e-4
+USE_GN = False
 
 # ---------------------------------------------Anchor config
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
 BASE_ANCHOR_SIZE_LIST = [32, 64, 128, 256, 512]
 ANCHOR_STRIDE = [8, 16, 32, 64, 128]
-ANCHOR_SCALES = [1.0]  # [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
+ANCHOR_SCALES = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
 ANCHOR_RATIOS = [1, 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
 ANCHOR_SCALE_FACTORS = None
@@ -120,15 +123,9 @@ IOU_POSITIVE_THRESHOLD = 0.5
 IOU_NEGATIVE_THRESHOLD = 0.4
 
 NMS = True
-NMS_IOU_THRESHOLD = 0.5
+NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
-
-# --------------------------------------------NAS FPN config
-NUM_FPN = 0
-NUM_NAS_FPN = 0
-USE_RELU = True
-FPN_CHANNEL = 256
 
 

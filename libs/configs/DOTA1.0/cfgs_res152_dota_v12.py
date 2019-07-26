@@ -5,29 +5,31 @@ import tensorflow as tf
 import math
 
 """
+v8 + resnet152
+
 This is your evaluation result for task 1:
 
-    mAP: 0.6089394631017461
+    mAP: 0.6579429843928571
     ap of each class:
-    plane:0.8859576592098442,
-    baseball-diamond:0.6745883911474353,
-    bridge:0.33669255398137776,
-    ground-track-field:0.5214597741938006,
-    small-vehicle:0.6616069164284678,
-    large-vehicle:0.7319363968127408,
-    ship:0.7588294869678884,
-    tennis-court:0.9082611825804324,
-    basketball-court:0.7734922061739598,
-    storage-tank:0.7689222533206449,
-    soccer-ball-field:0.3702702384451027,
-    roundabout:0.5477193039848192,
-    harbor:0.5343846914555771,
-    swimming-pool:0.5287523391912979,
-    helicopter:0.1312185526328024
+    plane:0.893503785252709,
+    baseball-diamond:0.7522990449456908,
+    bridge:0.4225903314724291,
+    ground-track-field:0.6176259567961212,
+    small-vehicle:0.665437258817552,
+    large-vehicle:0.5675280986867499,
+    ship:0.6577197671665636,
+    tennis-court:0.9081239749973251,
+    basketball-court:0.7968397419973662,
+    storage-tank:0.7810871388484488,
+    soccer-ball-field:0.5130668716025378,
+    roundabout:0.5987768566798091,
+    harbor:0.5408862301475073,
+    swimming-pool:0.6327828268456754,
+    helicopter:0.520876881636372
 
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190604
+Description: RetinaNet_DOTA_1x_20190607_108w
 Username: yangxue
 Institute: DetectionTeamUCAS
 Emailadress: yangxue16@mails.ucas.ac.cn
@@ -36,19 +38,19 @@ TeamMembers: yangxue, yangjirui
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190604'
-NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
+VERSION = 'RetinaNet_DOTA_1x_20190607'
+NET_NAME = 'resnet152_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
 # ---------------------------------------- System_config
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "0"
+GPU_GROUP = "0,1,2,3,4,5,6,7"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
-SAVE_WEIGHTS_INTE = 27000
+SAVE_WEIGHTS_INTE = 27000 * 2
 
 SUMMARY_PATH = ROOT_PATH + '/output/summary'
 TEST_SAVE_PATH = ROOT_PATH + '/tools/test_result'
@@ -75,15 +77,15 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0
-USE_IOU_FACTOR = True
+USE_IOU_FACTOR = False
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
 MOMENTUM = 0.9
-LR = 5e-4  # * NUM_GPU * BATCH_SIZE
+LR = 5e-4
 DECAY_STEP = [SAVE_WEIGHTS_INTE*12, SAVE_WEIGHTS_INTE*16, SAVE_WEIGHTS_INTE*20]
 MAX_ITERATION = SAVE_WEIGHTS_INTE*20
-WARM_SETP = int(1.0 / 8.0 * SAVE_WEIGHTS_INTE)
+WARM_SETP = int(1.0 / 4.0 * SAVE_WEIGHTS_INTE)
 
 # -------------------------------------------- Data_preprocess_config
 DATASET_NAME = 'DOTA'  # 'pascal', 'coco'
@@ -105,12 +107,12 @@ WEIGHT_DECAY = 1e-4
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
 BASE_ANCHOR_SIZE_LIST = [32, 64, 128, 256, 512]
 ANCHOR_STRIDE = [8, 16, 32, 64, 128]
-ANCHOR_SCALES = [1.0]  # [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
-ANCHOR_RATIOS = [1, 1 / 3., 3., 5., 1 / 5.]
+ANCHOR_SCALES = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
+ANCHOR_RATIOS = [1, 1 / 2, 2., 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
 ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
-METHOD = 'R'
+METHOD = 'H'
 USE_ANGLE_COND = False
 
 # --------------------------------------------RPN config
@@ -120,15 +122,9 @@ IOU_POSITIVE_THRESHOLD = 0.5
 IOU_NEGATIVE_THRESHOLD = 0.4
 
 NMS = True
-NMS_IOU_THRESHOLD = 0.5
+NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
-
-# --------------------------------------------NAS FPN config
-NUM_FPN = 0
-NUM_NAS_FPN = 0
-USE_RELU = True
-FPN_CHANNEL = 256
 
 

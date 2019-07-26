@@ -6,7 +6,6 @@ from __future__ import print_function
 import tensorflow as tf
 
 from libs.box_utils import bbox_transform
-from libs.box_utils.rbbox_overlaps import rbbx_overlaps
 from libs.box_utils.iou_rotate import iou_rotate_calculate2
 from libs.configs import cfgs
 

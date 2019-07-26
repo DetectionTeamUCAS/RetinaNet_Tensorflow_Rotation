@@ -54,8 +54,6 @@ def read_and_prepocess_single_img(filename_queue, shortside_len, is_training):
 
     if is_training:
 
-        # img, gtboxes_and_label = image_preprocess.aspect_ratio_jittering(img, gtboxes_and_label)
-
         img, gtboxes_and_label, img_h, img_w = image_preprocess.short_side_resize(img_tensor=img, gtboxes_and_label=gtboxes_and_label,
                                                                                   target_shortside_len=shortside_len,
                                                                                   length_limitation=cfgs.IMG_MAX_LENGTH)
@@ -82,8 +80,9 @@ def next_batch(dataset_name, batch_size, shortside_len, is_training):
     '''
     # assert batch_size == 1, "we only support batch_size is 1.We may support large batch_size in the future"
 
-    # if dataset_name not in ['ship', 'ICDAR2015', 'pascal', 'coco', 'bdd100k', 'DOTA']:
-    #     raise ValueError('dataSet name must be in pascal, coco spacenet and ship')
+    valid_dataset= ['ship', 'ICDAR2015', 'pascal', 'coco', 'bdd100k', 'DOTA', 'DOTA800', 'DOTA600', 'HRSC2016']
+    if dataset_name not in valid_dataset:
+        raise ValueError('dataSet name must be in {}'.format(valid_dataset))
 
     if is_training:
         pattern = os.path.join('../data/tfrecord', dataset_name + '_train*')
@@ -96,12 +95,8 @@ def next_batch(dataset_name, batch_size, shortside_len, is_training):
 
     filename_queue = tf.train.string_input_producer(filename_tensorlist)
 
-    # shortside_len = tf.constant(shortside_len)
-    # shortside_len = tf.random_shuffle(shortside_len)[0]
-
     img_name, img, gtboxes_and_label, num_obs, img_h, img_w = read_and_prepocess_single_img(filename_queue, shortside_len,
                                                                                             is_training=is_training)
-
     img_name_batch, img_batch, gtboxes_and_label_batch, num_obs_batch, img_h_batch, img_w_batch = \
         tf.train.batch(
                        [img_name, img, gtboxes_and_label, num_obs, img_h, img_w],

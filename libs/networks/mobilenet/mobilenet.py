@@ -87,6 +87,7 @@ def _set_arg_scope_defaults(defaults):
   if not items:
     yield
   else:
+    items = list(items)
     func, default_arg = items[0]
     with slim.arg_scope(func, **default_arg):
       with _set_arg_scope_defaults(items[1:]):

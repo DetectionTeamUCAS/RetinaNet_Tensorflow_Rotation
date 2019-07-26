@@ -141,6 +141,41 @@ def draw_boxes_with_label_and_scores(img_array, boxes, labels, scores, method, i
     return np.array(out_img_obj)
 
 
+def draw_boxes(img_array, boxes, labels, scores, color, method, in_graph=True):
+    if in_graph:
+        if cfgs.NET_NAME in ['resnet152_v1d', 'resnet101_v1d', 'resnet50_v1d']:
+            img_array = (img_array * np.array(cfgs.PIXEL_STD) + np.array(cfgs.PIXEL_MEAN_)) * 255
+        else:
+            img_array = img_array + np.array(cfgs.PIXEL_MEAN)
+    img_array.astype(np.float32)
+    boxes = boxes.astype(np.int64)
+    labels = labels.astype(np.int32)
+    img_array = np.array(img_array * 255 / np.max(img_array), dtype=np.uint8)
+
+    img_obj = Image.fromarray(img_array)
+    raw_img_obj = img_obj.copy()
+
+    draw_obj = ImageDraw.Draw(img_obj)
+    num_of_objs = 0
+    for box, a_label, a_score in zip(boxes, labels, scores):
+
+        if a_label != NOT_DRAW_BOXES:
+            num_of_objs += 1
+            draw_a_rectangel_in_img(draw_obj, box, color=color, width=3, method=method)
+            # draw_a_rectangel_in_img(draw_obj, box, color=STANDARD_COLORS[1], width=3, method=method)
+            if a_label == ONLY_DRAW_BOXES:  # -1
+                continue
+            elif a_label == ONLY_DRAW_BOXES_WITH_SCORES:  # -2
+                 only_draw_scores(draw_obj, box, a_score, color='White')
+                 continue
+            else:
+                draw_label_with_scores(draw_obj, box, a_label, a_score, color='White')
+
+    out_img_obj = Image.blend(raw_img_obj, img_obj, alpha=0.7)
+
+    return np.array(out_img_obj)
+
+
 if __name__ == '__main__':
     img_array = cv2.imread("/home/yjr/PycharmProjects/FPN_TF/tools/inference_image/2.jpg")
     img_array = np.array(img_array, np.float32) - np.array(cfgs.PIXEL_MEAN)

@@ -10,13 +10,13 @@ import cv2
 from libs.label_name_dict.label_dict import *
 from help_utils.tools import *
 
-tf.app.flags.DEFINE_string('VOC_dir', '/data/DOTA/DOTA_TOTAL/train800/', 'Voc dir')
-tf.app.flags.DEFINE_string('xml_dir', 'labeltxt', 'xml dir')
-tf.app.flags.DEFINE_string('image_dir', 'images', 'image dir')
+tf.app.flags.DEFINE_string('VOC_dir', '/data/ICDAR2015/', 'Voc dir')
+tf.app.flags.DEFINE_string('xml_dir', 'icdar2015_xml', 'xml dir')
+tf.app.flags.DEFINE_string('image_dir', 'train', 'image dir')
 tf.app.flags.DEFINE_string('save_name', 'train', 'save name')
 tf.app.flags.DEFINE_string('save_dir', '../tfrecord/', 'save name')
-tf.app.flags.DEFINE_string('img_format', '.png', 'format of image')
-tf.app.flags.DEFINE_string('dataset', 'DOTA800', 'dataset')
+tf.app.flags.DEFINE_string('img_format', '.jpg', 'format of image')
+tf.app.flags.DEFINE_string('dataset', 'ICDAR2015', 'dataset')
 FLAGS = tf.app.flags.FLAGS
 
 
@@ -91,8 +91,7 @@ def convert_pascal_to_tfrecord():
             continue
 
         img_height, img_width, gtbox_label = read_xml_gtbox_and_label(xml)
-
-        # if img_height != cfgs.IMG_SHORT_SIDE_LEN or img_width != cfgs.IMG_SHORT_SIDE_LEN:
+        # if img_height != 600 or img_width != 600:
         #     continue
 
         # img = np.array(Image.open(img_path))
@@ -114,8 +113,9 @@ def convert_pascal_to_tfrecord():
         writer.write(example.SerializeToString())
 
         view_bar('Conversion progress', count + 1, len(glob.glob(xml_path + '/*.xml')))
-    writer.close()
+
     print('\nConversion is complete!')
+    writer.close()
 
 
 if __name__ == '__main__':

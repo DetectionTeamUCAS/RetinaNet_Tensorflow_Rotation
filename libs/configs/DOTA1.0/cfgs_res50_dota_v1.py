@@ -7,32 +7,31 @@ import math
 """
 This is your evaluation result for task 1:
 
-    mAP: 0.6202421458459925
+    mAP: 0.6193695853564475
     ap of each class:
-    plane:0.8892408244599537,
-    baseball-diamond:0.6766821819859059, 
-    bridge:0.3355226289507958, 
-    ground-track-field:0.5682720597158797, 
-    small-vehicle:0.6611220116284138, 
-    large-vehicle:0.7328241457230781, 
-    ship:0.7523990206277865, 
-    tennis-court:0.9086622449542746, 
-    basketball-court:0.7395017663226189, 
-    storage-tank:0.7507486449527979, 
-    soccer-ball-field:0.4376573205950742, 
-    roundabout:0.5672307189189599, 
-    harbor:0.510501604810332, 
-    swimming-pool:0.5586472543490177, 
-    helicopter:0.21461975969500208
+    plane:0.8837872582705798,
+    baseball-diamond:0.6845066676944602,
+    bridge:0.3273754065324468,
+    ground-track-field:0.5797626602733302,
+    small-vehicle:0.6645275708726721,
+    large-vehicle:0.7337094834924401,
+    ship:0.7462790635365449,
+    tennis-court:0.908585498431191,
+    basketball-court:0.7353408159829793,
+    storage-tank:0.740209514200303,
+    soccer-ball-field:0.45726601009013423,
+    roundabout:0.6072366086046379,
+    harbor:0.5052134079632723,
+    swimming-pool:0.5709656898026236,
+    helicopter:0.14577812459909817
 
 The submitted information is :
 
-    Description: RetinaNet_DOTA_1x_20190527_48.6w
-    Username: yangxue
-    Institute: DetectionTeamUCAS
-    Emailadress: yangxue16@mails.ucas.ac.cn
-    TeamMembers: yangxue, yangjirui
-
+Description: RetinaNet_DOTA_1x_20190527_54w
+Username: yangxue
+Institute: DetectionTeamUCAS
+Emailadress: yangxue16@mails.ucas.ac.cn
+TeamMembers: yangxue, yangjirui
 
 """
 
@@ -121,14 +120,9 @@ IOU_POSITIVE_THRESHOLD = 0.5
 IOU_NEGATIVE_THRESHOLD = 0.4
 
 NMS = True
-NMS_IOU_THRESHOLD = 0.5
+NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
 
-# --------------------------------------------NAS FPN config
-NUM_FPN = 0
-NUM_NAS_FPN = 0
-USE_RELU = True
-FPN_CHANNEL = 256
 

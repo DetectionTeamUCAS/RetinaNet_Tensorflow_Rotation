@@ -5,12 +5,39 @@ import tensorflow as tf
 import math
 
 """
-2019-06-03	RetinaNet_ICDAR2015_20190601	72.65%	72.62%	72.64%
+v2 + FREEZE_BLOCKS = [True, False, False, False, False]
+This is your evaluation result for task 1:
+
+    mAP: 0.5316511018433303
+    ap of each class:
+    plane:0.8798016603321953,
+    baseball-diamond:0.6172287394402983,
+    bridge:0.3357909314108519,
+    ground-track-field:0.5021798660368012,
+    small-vehicle:0.6089171964981729,
+    large-vehicle:0.3852954113165628,
+    ship:0.5483806651464563,
+    tennis-court:0.9054463258911792,
+    basketball-court:0.627634764597444,
+    storage-tank:0.7480772972528041,
+    soccer-ball-field:0.26789687792832406,
+    roundabout:0.5473677567561206,
+    harbor:0.29099760970348104,
+    swimming-pool:0.5367161593858448,
+    helicopter:0.17303526595341798
+
+The submitted information is :
+
+Description: RetinaNet_DOTA_1x_20190529_54w
+Username: yangxue
+Institute: DetectionTeamUCAS
+Emailadress: yangxue16@mails.ucas.ac.cn
+TeamMembers: yangxue, yangjirui
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_ICDAR2015_20190601'
+VERSION = 'RetinaNet_DOTA_1x_20190529'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -18,11 +45,11 @@ ADD_BOX_IN_TENSORBOARD = True
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "0"
+GPU_GROUP = "0,1,2,3,4,5,6,7"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
-SHOW_TRAIN_INFO_INTE = 10
-SMRY_ITER = 100
-SAVE_WEIGHTS_INTE = 5000 * 2
+SHOW_TRAIN_INFO_INTE = 20
+SMRY_ITER = 200
+SAVE_WEIGHTS_INTE = 27000
 
 SUMMARY_PATH = ROOT_PATH + '/output/summary'
 TEST_SAVE_PATH = ROOT_PATH + '/tools/test_result'
@@ -41,7 +68,7 @@ EVALUATE_DIR = ROOT_PATH + '/output/evaluate_result_pickle/'
 # ------------------------------------------ Train config
 RESTORE_FROM_RPN = False
 FIXED_BLOCKS = 1  # allow 0~3
-FREEZE_BLOCKS = [True, True, False, False, False]  # for gluoncv backbone
+FREEZE_BLOCKS = [True, False, False, False, False]  # for gluoncv backbone
 USE_07_METRIC = True
 
 MUTILPY_BIAS_GRADIENT = 2.0  # if None, will not multipy
@@ -60,13 +87,13 @@ MAX_ITERATION = SAVE_WEIGHTS_INTE*20
 WARM_SETP = int(1.0 / 4.0 * SAVE_WEIGHTS_INTE)
 
 # -------------------------------------------- Data_preprocess_config
-DATASET_NAME = 'ICDAR2015'  # 'pascal', 'coco'
+DATASET_NAME = 'DOTA'  # 'pascal', 'coco'
 PIXEL_MEAN = [123.68, 116.779, 103.939]  # R, G, B. In tf, channel is RGB. In openCV, channel is BGR
 PIXEL_MEAN_ = [0.485, 0.456, 0.406]
 PIXEL_STD = [0.229, 0.224, 0.225]  # R, G, B. In tf, channel is RGB. In openCV, channel is BGR
-IMG_SHORT_SIDE_LEN = 720
-IMG_MAX_LENGTH = 1300
-CLASS_NUM = 1
+IMG_SHORT_SIDE_LEN = 800
+IMG_MAX_LENGTH = 800
+CLASS_NUM = 15
 
 # --------------------------------------------- Network_config
 SUBNETS_WEIGHTS_INITIALIZER = tf.random_normal_initializer(mean=0.0, stddev=0.01, seed=None)
@@ -84,7 +111,7 @@ ANCHOR_RATIOS = [1, 1 / 2, 2., 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
 ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
-METHOD = 'R'
+METHOD = 'H'
 USE_ANGLE_COND = False
 
 # --------------------------------------------RPN config
@@ -94,15 +121,9 @@ IOU_POSITIVE_THRESHOLD = 0.5
 IOU_NEGATIVE_THRESHOLD = 0.4
 
 NMS = True
-NMS_IOU_THRESHOLD = 0.5
+NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
-
-# --------------------------------------------NAS FPN config
-NUM_FPN = 0
-NUM_NAS_FPN = 0
-USE_RELU = True
-FPN_CHANNEL = 256
 
 

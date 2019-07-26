@@ -7,6 +7,8 @@ from __future__ import division
 import tensorflow as tf
 import cv2
 import numpy as np
+from libs.label_name_dict.label_dict import NAME_LABEL_MAP
+from libs.configs import cfgs
 
 
 def max_length_limitation(length, length_limitation):
@@ -81,40 +83,3 @@ def random_flip_left_right(img_tensor, gtboxes_and_label):
                                            lambda: (img_tensor, gtboxes_and_label))
 
     return img_tensor,  gtboxes_and_label
-
-
-def aspect_ratio_jittering(image, gtbox, aspect_ratio=(1.0, 1.5)):
-    ratio = tf.random_uniform(shape=[], minval=aspect_ratio[0], maxval=aspect_ratio[1])
-    img_h, img_w = tf.shape(image)[0], tf.shape(image)[1]
-    areas = img_h * img_w
-    areas = tf.cast(areas, tf.float32)
-
-    short_side = tf.sqrt(areas/ratio)
-    long_side = short_side * ratio
-    short_side = tf.cast(short_side, tf.int32)
-    long_side = tf.cast(long_side, tf.int32)
-
-    image, gtbox = tf.cond(tf.less(img_w, img_h),
-                           true_fn=lambda: tf_resize_image(image, gtbox, short_side, long_side),
-                           false_fn=lambda: tf_resize_image(image, gtbox, long_side, short_side))
-
-    return image, gtbox
-
-
-def tf_resize_image(image, gtbox, rw, rh):
-    img_h, img_w = tf.shape(image)[0], tf.shape(image)[1]
-    image = tf.image.resize_bilinear(tf.expand_dims(image, axis=0), (rh, rw))
-    x1, y1, x2, y2, x3, y3, x4, y4, label = tf.unstack(gtbox, axis=1)
-    new_x1 = x1 * rw // img_w
-    new_x2 = x2 * rw // img_w
-    new_x3 = x3 * rw // img_w
-    new_x4 = x4 * rw // img_w
-
-    new_y1 = y1 * rh // img_h
-    new_y2 = y2 * rh // img_h
-    new_y3 = y3 * rh // img_h
-    new_y4 = y4 * rh // img_h
-    gtbox = tf.transpose(tf.stack([new_x1, new_y1, new_x2, new_y2, new_x3, new_y3, new_x4, new_y4, label], axis=0))
-    return tf.squeeze(image, axis=0), gtbox
-
-

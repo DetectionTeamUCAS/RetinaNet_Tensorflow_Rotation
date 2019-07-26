@@ -5,38 +5,41 @@ import tensorflow as tf
 import math
 
 """
+v1 + 2x multi-gpu
+
 This is your evaluation result for task 1:
 
-    mAP: 0.5427861025083714
-    ap of each class: plane:0.8859586592300197,
-    baseball-diamond:0.6293516910205127,
-    bridge:0.3748807440582939,
-    ground-track-field:0.3629826990766374,
-    small-vehicle:0.5934173279776526,
-    large-vehicle:0.4390968910335445,
-    ship:0.615977156097701,
-    tennis-court:0.8987573871782142,
-    basketball-court:0.6444591873292593,
-    storage-tank:0.762600866949679,
-    soccer-ball-field:0.3363389936245533,
-    roundabout:0.5531555137496719,
-    harbor:0.37690225344023554,
-    swimming-pool:0.5305543737056556,
-    helicopter:0.13735779315394306
+    mAP: 0.62254218416428
+    ap of each class:
+    plane:0.887945888226154,
+    baseball-diamond:0.6826947930118734,
+    bridge:0.31644198755436914,
+    ground-track-field:0.5657609524817373,
+    small-vehicle:0.6637626685250525,
+    large-vehicle:0.7274283353038937,
+    ship:0.7032336615561822,
+    tennis-court:0.9086156561884718,
+    basketball-court:0.7387389056593121,
+    storage-tank:0.755496208304846,
+    soccer-ball-field:0.44223268652715814,
+    roundabout:0.5790070316108199,
+    harbor:0.5195873812063292,
+    swimming-pool:0.5676670034124572,
+    helicopter:0.27951960289554134
 
 The submitted information is :
 
-    Description: RetinaNet_DOTA_1x_20190603
-    Username: yangxue
-    Institute: DetectionTeamUCAS
-    Emailadress: yangxue16@mails.ucas.ac.cn
-    TeamMembers: yangxue, yangjirui
+Description: RetinaNet_DOTA_1x_20190605_108w
+Username: DetectionTeamCSU
+Institute: CSU
+Emailadress: yangxue@csu.edu.cn
+TeamMembers: YangXue
 
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190603'
+VERSION = 'RetinaNet_DOTA_1x_20190605'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -48,7 +51,7 @@ GPU_GROUP = "0,1,2,3,4,5,6,7"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
-SAVE_WEIGHTS_INTE = 27000
+SAVE_WEIGHTS_INTE = 27000 * 2
 
 SUMMARY_PATH = ROOT_PATH + '/output/summary'
 TEST_SAVE_PATH = ROOT_PATH + '/tools/test_result'
@@ -100,6 +103,7 @@ SUBNETS_BIAS_INITIALIZER = tf.constant_initializer(value=0.0)
 PROBABILITY = 0.01
 FINAL_CONV_BIAS_INITIALIZER = tf.constant_initializer(value=-math.log((1.0 - PROBABILITY) / PROBABILITY))
 WEIGHT_DECAY = 1e-4
+USE_GN = False
 
 # ---------------------------------------------Anchor config
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
@@ -110,7 +114,7 @@ ANCHOR_RATIOS = [1, 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
 ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
-METHOD = 'H'
+METHOD = 'R'
 USE_ANGLE_COND = False
 
 # --------------------------------------------RPN config
@@ -120,14 +124,9 @@ IOU_POSITIVE_THRESHOLD = 0.5
 IOU_NEGATIVE_THRESHOLD = 0.4
 
 NMS = True
-NMS_IOU_THRESHOLD = 0.5
+NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
 
-# --------------------------------------------NAS FPN config
-NUM_FPN = 0
-NUM_NAS_FPN = 0
-USE_RELU = True
-FPN_CHANNEL = 256
 

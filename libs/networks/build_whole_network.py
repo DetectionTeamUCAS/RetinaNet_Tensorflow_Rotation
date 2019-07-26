@@ -33,7 +33,7 @@ class DetectionNetwork(object):
         if self.base_network_name.startswith('resnet_v1'):
             return resnet.resnet_base(input_img_batch, scope_name=self.base_network_name, is_training=self.is_training)
 
-        elif self.base_network_name in ['resnet101_v1d', 'resnet50_v1d']:
+        elif self.base_network_name in ['resnet152_v1d', 'resnet101_v1d', 'resnet50_v1d']:
 
             return resnet_gluoncv.resnet_base(input_img_batch, scope_name=self.base_network_name,
                                               is_training=self.is_training)
@@ -120,9 +120,7 @@ class DetectionNetwork(object):
                         scope_list = ['conv2d_3x3_cls_' + level, 'conv2d_3x3_reg_' + level,
                                       'rpn_classification_' + level, 'rpn_regression_' + level]
 
-                    rpn_box_scores, rpn_box_probs = self.rpn_cls_net(feature_pyramid[level],
-                                                                                            scope_list, reuse_flag,
-                                                                                            level)
+                    rpn_box_scores, rpn_box_probs = self.rpn_cls_net(feature_pyramid[level], scope_list, reuse_flag, level)
                     rpn_delta_boxes = self.rpn_reg_net(feature_pyramid[level], scope_list, reuse_flag, level)
 
                     rpn_scores_list.append(rpn_box_scores)
@@ -229,8 +227,8 @@ class DetectionNetwork(object):
                 labels, target_delta, anchor_states, target_boxes = tf.py_func(func=anchor_target_layer,
                                                                                inp=[gtboxes_batch_h, gtboxes_batch_r,
                                                                                     anchors, gpu_id],
-                                                                               Tout=[tf.float32, tf.float32,
-                                                                                     tf.float32, tf.float32])
+                                                                               Tout=[tf.float32, tf.float32, tf.float32,
+                                                                                     tf.float32])
 
                 if self.method == 'H':
                     self.add_anchor_img_smry(input_img_batch, anchors, anchor_states, 0)
@@ -238,8 +236,10 @@ class DetectionNetwork(object):
                     self.add_anchor_img_smry(input_img_batch, anchors, anchor_states, 1)
 
                 cls_loss = losses.focal_loss(labels, rpn_cls_score, anchor_states)
+
                 if cfgs.USE_IOU_FACTOR:
-                    reg_loss = losses.iou_smooth_l1_loss(target_delta, rpn_box_pred, anchor_states, target_boxes, anchors)
+                    reg_loss = losses.iou_smooth_l1_loss(target_delta, rpn_box_pred, anchor_states, target_boxes,
+                                                         anchors)
                 else:
                     reg_loss = losses.smooth_l1_loss(target_delta, rpn_box_pred, anchor_states)
 
@@ -256,9 +256,6 @@ class DetectionNetwork(object):
                 category = tf.stop_gradient(category)
 
                 return boxes, scores, category, losses_dict
-
-        # Second stage
-        # rpn_cls_prob_max = tf.max
 
     def get_restorer(self):
         checkpoint_path = tf.train.latest_checkpoint(os.path.join(cfgs.TRAINED_CKPT, cfgs.VERSION))
@@ -357,23 +354,3 @@ class DetectionNetwork(object):
                     grad = tf.multiply(grad, scale)
                 final_gradients.append((grad, var))
         return final_gradients
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
