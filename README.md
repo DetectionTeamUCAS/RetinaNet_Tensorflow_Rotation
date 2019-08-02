@@ -30,7 +30,7 @@ This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/
 5、tensorflow 1.12       
               
 ## IoU-smooth L1 Loss
-**[SCRDet: Towards More Robust Detection for Small, Cluttered and Rotated Objects (ICCV2019)]()**    
+**[SCRDet: Towards More Robust Detection for Small, Cluttered and Rotated Objects (ICCV2019)](https://arxiv.org/abs/1811.07126)**    
 
 ![1](example.png)
 
