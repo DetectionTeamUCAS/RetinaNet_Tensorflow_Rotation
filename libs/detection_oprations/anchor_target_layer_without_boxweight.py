@@ -14,6 +14,7 @@ from libs.box_utils.cython_utils.cython_bbox import bbox_overlaps
 from libs.box_utils.rbbox_overlaps import rbbx_overlaps
 from libs.box_utils.iou_cpu import get_iou_matrix
 from libs.box_utils import bbox_transform
+from libs.box_utils.coordinate_convert import coordinate_present_convert
 
 
 def anchor_target_layer(gt_boxes_h, gt_boxes_r, anchors, gpu_id=0):
@@ -69,6 +70,10 @@ def anchor_target_layer(gt_boxes_h, gt_boxes_r, anchors, gpu_id=0):
         w = anchors[:, 3] - anchors[:, 1] + 1
         theta = -90 * np.ones_like(x_c)
         anchors = np.vstack([x_c, y_c, w, h, theta]).transpose()
+
+    if cfgs.ANGLE_RANGE == 180:
+        anchors = coordinate_present_convert(anchors, mode=-1)
+        target_boxes = coordinate_present_convert(target_boxes, mode=-1)
     target_delta = bbox_transform.rbbox_transform(ex_rois=anchors, gt_rois=target_boxes)
 
     return np.array(labels, np.float32), np.array(target_delta, np.float32), \

@@ -4,6 +4,8 @@ from libs.box_utils import bbox_transform
 from libs.box_utils import nms_rotate
 import tensorflow as tf
 
+from libs.box_utils.coordinate_convert import coordinate_present_convert, coords_regular
+
 
 def filter_detections(boxes, scores, is_training):
     """
@@ -48,7 +50,29 @@ def postprocess_detctions(rpn_bbox_pred, rpn_cls_prob, anchors, is_training):
         theta = -90 * tf.ones_like(x_c)
         anchors = tf.transpose(tf.stack([x_c, y_c, w, h, theta]))
 
+    if cfgs.ANGLE_RANGE == 180:
+        anchors = tf.py_func(coordinate_present_convert,
+                             inp=[anchors, -1],
+                             Tout=[tf.float32])
+        anchors = tf.reshape(anchors, [-1, 5])
+
     boxes_pred = bbox_transform.rbbox_transform_inv(boxes=anchors, deltas=rpn_bbox_pred)
+
+    if cfgs.ANGLE_RANGE == 180:
+        # boxes_pred = tf.py_func(coords_regular,
+        #                         inp=[boxes_pred],
+        #                         Tout=[tf.float32])
+        # boxes_pred = tf.reshape(boxes_pred, [-1, 5])
+
+        _, _, _, _, theta = tf.unstack(boxes_pred, axis=1)
+        indx = tf.reshape(tf.where(tf.logical_and(tf.less(theta, 0), tf.greater_equal(theta, -180))), [-1, ])
+        boxes_pred = tf.gather(boxes_pred, indx)
+        rpn_cls_prob = tf.gather(rpn_cls_prob, indx)
+
+        boxes_pred = tf.py_func(coordinate_present_convert,
+                                inp=[boxes_pred, 1],
+                                Tout=[tf.float32])
+        boxes_pred = tf.reshape(boxes_pred, [-1, 5])
 
     return_boxes_pred = []
     return_scores = []

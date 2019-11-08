@@ -5,30 +5,32 @@ import tensorflow as tf
 import math
 
 """
-v3 + single gpu
-This is your evaluation result for task 1:
+v4 + [-90, 0) --> [-180, 0)
+This is your result for task 1:
 
-    mAP: 0.6221653788509555
-    ap of each class:
-    plane:0.8886962393903889,
-    baseball-diamond:0.7445704997642527,
-    bridge:0.4011388256459277,
-    ground-track-field:0.5803249360980748,
-    small-vehicle:0.6310258745229181,
-    large-vehicle:0.5061271440555017,
-    ship:0.6363272945634808,
-    tennis-court:0.9088863124872129,
-    basketball-court:0.7791251096304667,
-    storage-tank:0.7638487154044006,
-    soccer-ball-field:0.48257984838567397,
-    roundabout:0.5585423874135443,
-    harbor:0.5066880141708576,
-    swimming-pool:0.6023322133951021,
-    helicopter:0.3422672678365278
+This is your result for task 1:
+
+mAP: 0.6410387162340515
+ap of each class:
+plane:0.8825002666630422,
+baseball-diamond:0.7687908856808928,
+bridge:0.384748290602071,
+ground-track-field:0.664809884478965,
+small-vehicle:0.5414514889058302,
+large-vehicle:0.4788509185128642,
+ship:0.608654819886516,
+tennis-court:0.90013300277984,
+basketball-court:0.7921189604715826,
+storage-tank:0.7940181430812733,
+soccer-ball-field:0.5191877296004171,
+roundabout:0.6054245683222966,
+harbor:0.5363073420071247,
+swimming-pool:0.5913801884362678,
+helicopter:0.547204254081788
 
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190530_51.3w
+Description: RetinaNet_DOTA_1x_20191103_54w
 Username: yangxue
 Institute: DetectionTeamUCAS
 Emailadress: yangxue16@mails.ucas.ac.cn
@@ -37,7 +39,7 @@ TeamMembers: yangxue, yangjirui
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190530'
+VERSION = 'RetinaNet_DOTA_1x_20191102'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -114,7 +116,7 @@ ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
 METHOD = 'H'
 USE_ANGLE_COND = False
-ANGLE_RANGE = 90  # or 180
+ANGLE_RANGE = 180  # or 90
 
 # --------------------------------------------RPN config
 SHARE_NET = True

@@ -5,39 +5,37 @@ import tensorflow as tf
 import math
 
 """
-v3 + single gpu
-This is your evaluation result for task 1:
+v4 + atan
+This is your result for task 1:
 
-    mAP: 0.6221653788509555
-    ap of each class:
-    plane:0.8886962393903889,
-    baseball-diamond:0.7445704997642527,
-    bridge:0.4011388256459277,
-    ground-track-field:0.5803249360980748,
-    small-vehicle:0.6310258745229181,
-    large-vehicle:0.5061271440555017,
-    ship:0.6363272945634808,
-    tennis-court:0.9088863124872129,
-    basketball-court:0.7791251096304667,
-    storage-tank:0.7638487154044006,
-    soccer-ball-field:0.48257984838567397,
-    roundabout:0.5585423874135443,
-    harbor:0.5066880141708576,
-    swimming-pool:0.6023322133951021,
-    helicopter:0.3422672678365278
-
+mAP: 0.6511450549584724
+ap of each class: plane:0.8877809042872433,
+baseball-diamond:0.7735557833035908,
+bridge:0.41432194690232593,
+ground-track-field:0.6618291593702126,
+small-vehicle:0.5552107195407914,
+large-vehicle:0.4857169873949726,
+ship:0.6483131307845054,
+tennis-court:0.9085375803624285,
+basketball-court:0.8140258362691197,
+storage-tank:0.8026148657191843,
+soccer-ball-field:0.5236893754620894,
+roundabout:0.5980641773687223,
+harbor:0.5526353497689492,
+swimming-pool:0.6651580798734689,
+helicopter:0.47572192796948004
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190530_51.3w
-Username: yangxue
-Institute: DetectionTeamUCAS
-Emailadress: yangxue16@mails.ucas.ac.cn
-TeamMembers: yangxue, yangjirui
+Description: RetinaNet_DOTA_1x_20191102_54w
+Username: SJTU-Det
+Institute: SJTU
+Emailadress: yangxue-2019-sjtu@sjtu.edu.cn
+TeamMembers: yangxue
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190530'
+VERSION = 'RetinaNet_DOTA_1x_20191103'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -45,7 +43,7 @@ ADD_BOX_IN_TENSORBOARD = True
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "0"
+GPU_GROUP = "1"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
@@ -76,7 +74,7 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0 / 5.0
-REG_LOSS_MODE = None
+REG_LOSS_MODE = 1
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
@@ -127,5 +125,4 @@ NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
-
 

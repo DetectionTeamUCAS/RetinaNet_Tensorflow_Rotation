@@ -71,9 +71,9 @@ def read_xml_gtbox_and_label(xml_path):
 
 
 def convert_pascal_to_tfrecord():
-    xml_path = FLAGS.VOC_dir + FLAGS.xml_dir
-    image_path = FLAGS.VOC_dir + FLAGS.image_dir
-    save_path = FLAGS.save_dir + FLAGS.dataset + '_' + FLAGS.save_name + '.tfrecord'
+    xml_path = os.path.join(FLAGS.VOC_dir + FLAGS.xml_dir)
+    image_path = os.path.join(FLAGS.VOC_dir + FLAGS.image_dir)
+    save_path = os.path.join(FLAGS.save_dir, FLAGS.dataset + '_' + FLAGS.save_name + '.tfrecord')
     mkdir(FLAGS.save_dir)
 
     # writer_options = tf.python_io.TFRecordOptions(tf.python_io.TFRecordCompressionType.ZLIB)

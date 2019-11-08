@@ -2,7 +2,12 @@ import os
 import scipy.misc as misc
 from xml.dom.minidom import Document
 import numpy as np
-import copy, cv2
+import copy
+import cv2
+import sys
+sys.path.append('../../..')
+
+from help_utils.tools import mkdir
 
 
 def save_to_xml(save_path, im_height, im_width, objects_axis, label_name):
@@ -123,26 +128,29 @@ class_list = ['plane', 'baseball-diamond', 'bridge', 'ground-track-field',
               'tennis-court', 'basketball-court',
               'storage-tank', 'soccer-ball-field',
               'roundabout', 'harbor',
-              'swimming-pool', 'helicopter']
+              'swimming-pool', 'helicopter', 'container-crane']
 
 
 def format_label(txt_list):
     format_data = []
-    for i in txt_list[2:]:
+    for i in txt_list:
+        if len(i.split(' ')) < 9:
+            continue
         format_data.append(
-            [int(xy) for xy in i.split(' ')[:8]] + [class_list.index(i.split(' ')[8])]
+            [float(xy) for xy in i.split(' ')[:8]] + [class_list.index(i.split(' ')[8])]
         )
+
         if i.split(' ')[8] not in class_list:
             print('warning found a new label :', i.split(' ')[8])
             exit()
     return np.array(format_data)
 
 
-def clip_image(file_idx, image, boxes_all, width, height):
+def clip_image(file_idx, image, boxes_all, width, height, stride_w, stride_h):
     if len(boxes_all) > 0:
         shape = image.shape
-        for start_h in range(0, shape[0], 450):
-            for start_w in range(0, shape[1], 450):
+        for start_h in range(0, shape[0], stride_h):
+            for start_w in range(0, shape[1], stride_w):
                 boxes = copy.deepcopy(boxes_all)
                 box = np.zeros_like(boxes_all)
                 start_h_new = start_h
@@ -175,23 +183,24 @@ def clip_image(file_idx, image, boxes_all, width, height):
                 cond2 = np.intersect1d(np.where(center_y[:] <= (bottom_right_row - top_left_row))[0],
                                        np.where(center_x[:] <= (bottom_right_col - top_left_col))[0])
                 idx = np.intersect1d(cond1, cond2)
-                if len(idx) > 0:
+                if len(idx) > 0 and (subImage.shape[0] > 5 and subImage.shape[1] > 5):
+                    mkdir(os.path.join(save_dir, 'images'))
+                    img = os.path.join(save_dir, 'images',
+                                       "%s_%04d_%04d.png" % (file_idx, top_left_row, top_left_col))
+                    cv2.imwrite(img, subImage)
+
+                    mkdir(os.path.join(save_dir, 'labeltxt'))
                     xml = os.path.join(save_dir, 'labeltxt',
                                        "%s_%04d_%04d.xml" % (file_idx, top_left_row, top_left_col))
                     save_to_xml(xml, subImage.shape[0], subImage.shape[1], box[idx, :], class_list)
-                    # print ('save xml : ', xml)
-                    if subImage.shape[0] > 5 and subImage.shape[1] > 5:
-                        img = os.path.join(save_dir, 'images',
-                                           "%s_%04d_%04d.png" % (file_idx, top_left_row, top_left_col))
-                        cv2.imwrite(img, subImage)
 
 
 print('class_list', len(class_list))
-raw_data = '/data/DOTA/train/'
+raw_data = '/data/dataset/DOTA/train/'
 raw_images_dir = os.path.join(raw_data, 'images', 'images')
-raw_label_dir = os.path.join(raw_data, 'labelTxt')
+raw_label_dir = os.path.join(raw_data, 'labelTxt', 'labelTxt')
 
-save_dir = '/data/DOTA/DOTA_TOTAL/train/'
+save_dir = '/data/dataset/DOTA/DOTA1.0/trainval/'
 
 images = [i for i in os.listdir(raw_images_dir) if 'png' in i]
 labels = [i for i in os.listdir(raw_label_dir) if 'txt' in i]
@@ -202,10 +211,12 @@ print('find label', len(labels))
 min_length = 1e10
 max_length = 1
 
+img_h, img_w, stride_h, stride_w = 600, 600, 450, 450
+
 for idx, img in enumerate(images):
     print(idx, 'read image', img)
     img_data = cv2.imread(os.path.join(raw_images_dir, img))
 
     txt_data = open(os.path.join(raw_label_dir, img.replace('png', 'txt')), 'r').readlines()
     box = format_label(txt_data)
-    clip_image(img.strip('.png'), img_data, box, 600, 600)
+    clip_image(img.strip('.png'), img_data, box, img_w, img_h, stride_w, stride_h)

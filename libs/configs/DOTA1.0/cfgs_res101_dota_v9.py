@@ -78,7 +78,7 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0 / 5.0
-USE_IOU_FACTOR = False
+REG_LOSS_MODE = None
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
@@ -115,6 +115,7 @@ ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
 METHOD = 'H'
 USE_ANGLE_COND = False
+ANGLE_RANGE = 90  # or 180
 
 # --------------------------------------------RPN config
 SHARE_NET = True

@@ -177,11 +177,11 @@ def test_dota(det_net, real_test_img_list, args, txt_name):
     result_queue = Queue(500)
     procs = []
 
-    for i in range(gpu_num):
+    for i, gpu_id in enumerate(args.gpus.strip().split(',')):
         start = i * nr_image
         end = min(start + nr_image, nr_records)
         split_records = real_test_img_list[start:end]
-        proc = Process(target=worker, args=(i, split_records, det_net, args, result_queue))
+        proc = Process(target=worker, args=(int(gpu_id), split_records, det_net, args, result_queue))
         print('process:%d, start:%d, end:%d' % (i, start, end))
         proc.start()
         procs.append(proc)

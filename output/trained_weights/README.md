@@ -1,1 +1,1 @@
-Please download [trained model](https://github.com/DetectionTeamUCAS/Models/RetinaNet_Tensorflow) by this project, then put it here.
+Please download trained model by this project, then put it here.

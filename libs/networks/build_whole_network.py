@@ -12,7 +12,7 @@ from libs.box_utils import anchor_utils, generate_anchors, generate_rotate_ancho
 from libs.configs import cfgs
 from libs.losses import losses
 from libs.box_utils import show_box_in_tensor
-from libs.detection_oprations.proposal_opr import postprocess_detctions
+from libs.detection_oprations.proposal_opr_ import postprocess_detctions
 from libs.detection_oprations.anchor_target_layer_without_boxweight import anchor_target_layer
 
 
@@ -237,9 +237,11 @@ class DetectionNetwork(object):
 
                 cls_loss = losses.focal_loss(labels, rpn_cls_score, anchor_states)
 
-                if cfgs.USE_IOU_FACTOR:
+                if cfgs.REG_LOSS_MODE == 0:
                     reg_loss = losses.iou_smooth_l1_loss(target_delta, rpn_box_pred, anchor_states, target_boxes,
                                                          anchors)
+                elif cfgs.REG_LOSS_MODE == 1:
+                    reg_loss = losses.smooth_l1_loss_atan(target_delta, rpn_box_pred, anchor_states)
                 else:
                     reg_loss = losses.smooth_l1_loss(target_delta, rpn_box_pred, anchor_states)
 
