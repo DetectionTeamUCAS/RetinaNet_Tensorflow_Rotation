@@ -10,23 +10,23 @@ This is your result for task 1:
 
 This is your result for task 1:
 
-mAP: 0.6410387162340515
-ap of each class:
-plane:0.8825002666630422,
-baseball-diamond:0.7687908856808928,
-bridge:0.384748290602071,
-ground-track-field:0.664809884478965,
-small-vehicle:0.5414514889058302,
-large-vehicle:0.4788509185128642,
-ship:0.608654819886516,
-tennis-court:0.90013300277984,
-basketball-court:0.7921189604715826,
-storage-tank:0.7940181430812733,
-soccer-ball-field:0.5191877296004171,
-roundabout:0.6054245683222966,
-harbor:0.5363073420071247,
-swimming-pool:0.5913801884362678,
-helicopter:0.547204254081788
+    mAP: 0.6410387162340515
+    ap of each class:
+    plane:0.8825002666630422,
+    baseball-diamond:0.7687908856808928,
+    bridge:0.384748290602071,
+    ground-track-field:0.664809884478965,
+    small-vehicle:0.5414514889058302,
+    large-vehicle:0.4788509185128642,
+    ship:0.608654819886516,
+    tennis-court:0.90013300277984,
+    basketball-court:0.7921189604715826,
+    storage-tank:0.7940181430812733,
+    soccer-ball-field:0.5191877296004171,
+    roundabout:0.6054245683222966,
+    harbor:0.5363073420071247,
+    swimming-pool:0.5913801884362678,
+    helicopter:0.547204254081788
 
 The submitted information is :
 

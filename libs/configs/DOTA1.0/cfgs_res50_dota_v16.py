@@ -8,23 +8,23 @@ import math
 v4 + atan
 This is your result for task 1:
 
-mAP: 0.6511450549584724
-ap of each class: plane:0.8877809042872433,
-baseball-diamond:0.7735557833035908,
-bridge:0.41432194690232593,
-ground-track-field:0.6618291593702126,
-small-vehicle:0.5552107195407914,
-large-vehicle:0.4857169873949726,
-ship:0.6483131307845054,
-tennis-court:0.9085375803624285,
-basketball-court:0.8140258362691197,
-storage-tank:0.8026148657191843,
-soccer-ball-field:0.5236893754620894,
-roundabout:0.5980641773687223,
-harbor:0.5526353497689492,
-swimming-pool:0.6651580798734689,
-helicopter:0.47572192796948004
-The submitted information is :
+    mAP: 0.6511450549584724
+    ap of each class: plane:0.8877809042872433,
+    baseball-diamond:0.7735557833035908,
+    bridge:0.41432194690232593,
+    ground-track-field:0.6618291593702126,
+    small-vehicle:0.5552107195407914,
+    large-vehicle:0.4857169873949726,
+    ship:0.6483131307845054,
+    tennis-court:0.9085375803624285,
+    basketball-court:0.8140258362691197,
+    storage-tank:0.8026148657191843,
+    soccer-ball-field:0.5236893754620894,
+    roundabout:0.5980641773687223,
+    harbor:0.5526353497689492,
+    swimming-pool:0.6651580798734689,
+    helicopter:0.47572192796948004
+    The submitted information is :
 
 Description: RetinaNet_DOTA_1x_20191102_54w
 Username: SJTU-Det

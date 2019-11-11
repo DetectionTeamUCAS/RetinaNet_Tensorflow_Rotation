@@ -6,6 +6,17 @@ import math
 
 """
 v15 + [-90, 0) --> [-180, 0)
+This is your result for task 1:
+
+mAP: 0.6331393707245438
+ap of each class: plane:0.8855651416180137, baseball-diamond:0.7506170439764697, bridge:0.37820193165920807, ground-track-field:0.5876074736410675, small-vehicle:0.5398925524095497, large-vehicle:0.45488518825532054, ship:0.6143898556575647, tennis-court:0.898883079961541, basketball-court:0.7960688808112641, storage-tank:0.7836823036541495, soccer-ball-field:0.5483442146314041, roundabout:0.6054606429014591, harbor:0.540896997167814, swimming-pool:0.6177733132868135, helicopter:0.49482194123651807
+The submitted information is :
+
+Description: RetinaNet_DOTA_1x_20191106_54w
+Username: yangxue
+Institute: DetectionTeamUCAS
+Emailadress: yangxue16@mails.ucas.ac.cn
+TeamMembers: yangxue, yangjirui
 
 """
 

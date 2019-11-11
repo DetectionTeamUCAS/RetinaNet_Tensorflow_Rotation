@@ -5,39 +5,12 @@ import tensorflow as tf
 import math
 
 """
-v3 + single gpu
-This is your evaluation result for task 1:
-
-    mAP: 0.6221653788509555
-    ap of each class:
-    plane:0.8886962393903889,
-    baseball-diamond:0.7445704997642527,
-    bridge:0.4011388256459277,
-    ground-track-field:0.5803249360980748,
-    small-vehicle:0.6310258745229181,
-    large-vehicle:0.5061271440555017,
-    ship:0.6363272945634808,
-    tennis-court:0.9088863124872129,
-    basketball-court:0.7791251096304667,
-    storage-tank:0.7638487154044006,
-    soccer-ball-field:0.48257984838567397,
-    roundabout:0.5585423874135443,
-    harbor:0.5066880141708576,
-    swimming-pool:0.6023322133951021,
-    helicopter:0.3422672678365278
-
-The submitted information is :
-
-Description: RetinaNet_DOTA_1x_20190530_51.3w
-Username: yangxue
-Institute: DetectionTeamUCAS
-Emailadress: yangxue16@mails.ucas.ac.cn
-TeamMembers: yangxue, yangjirui
+v15 + [-90, 0) --> [-180, 0)
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190530'
+VERSION = 'RetinaNet_DOTA_1x_20191106'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -45,7 +18,7 @@ ADD_BOX_IN_TENSORBOARD = True
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "0"
+GPU_GROUP = "1"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
@@ -76,7 +49,7 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0 / 5.0
-REG_LOSS_MODE = None
+REG_LOSS_MODE = 1
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
@@ -114,7 +87,7 @@ ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
 METHOD = 'H'
 USE_ANGLE_COND = False
-ANGLE_RANGE = 90  # or 180
+ANGLE_RANGE = 180  # or 90
 
 # --------------------------------------------RPN config
 SHARE_NET = True
@@ -127,5 +100,4 @@ NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
-
 

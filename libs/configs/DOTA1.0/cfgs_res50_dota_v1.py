@@ -5,33 +5,7 @@ import tensorflow as tf
 import math
 
 """
-This is your evaluation result for task 1:
 
-    mAP: 0.6193695853564475
-    ap of each class:
-    plane:0.8837872582705798,
-    baseball-diamond:0.6845066676944602,
-    bridge:0.3273754065324468,
-    ground-track-field:0.5797626602733302,
-    small-vehicle:0.6645275708726721,
-    large-vehicle:0.7337094834924401,
-    ship:0.7462790635365449,
-    tennis-court:0.908585498431191,
-    basketball-court:0.7353408159829793,
-    storage-tank:0.740209514200303,
-    soccer-ball-field:0.45726601009013423,
-    roundabout:0.6072366086046379,
-    harbor:0.5052134079632723,
-    swimming-pool:0.5709656898026236,
-    helicopter:0.14577812459909817
-
-The submitted information is :
-
-Description: RetinaNet_DOTA_1x_20190527_54w
-Username: yangxue
-Institute: DetectionTeamUCAS
-Emailadress: yangxue16@mails.ucas.ac.cn
-TeamMembers: yangxue, yangjirui
 
 """
 
@@ -44,7 +18,7 @@ ADD_BOX_IN_TENSORBOARD = True
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "0"
+GPU_GROUP = "2"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
@@ -100,6 +74,7 @@ SUBNETS_BIAS_INITIALIZER = tf.constant_initializer(value=0.0)
 PROBABILITY = 0.01
 FINAL_CONV_BIAS_INITIALIZER = tf.constant_initializer(value=-math.log((1.0 - PROBABILITY) / PROBABILITY))
 WEIGHT_DECAY = 1e-4
+USE_GN = False
 
 # ---------------------------------------------Anchor config
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
