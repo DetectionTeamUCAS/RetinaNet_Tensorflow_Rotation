@@ -5,13 +5,41 @@ import tensorflow as tf
 import math
 
 """
-v15 + [-90, 0) --> [-180, 0)
+v8 + resnet152
+
+This is your evaluation result for task 1:
+
+    mAP: 0.6579429843928571
+    ap of each class:
+    plane:0.893503785252709,
+    baseball-diamond:0.7522990449456908,
+    bridge:0.4225903314724291,
+    ground-track-field:0.6176259567961212,
+    small-vehicle:0.665437258817552,
+    large-vehicle:0.5675280986867499,
+    ship:0.6577197671665636,
+    tennis-court:0.9081239749973251,
+    basketball-court:0.7968397419973662,
+    storage-tank:0.7810871388484488,
+    soccer-ball-field:0.5130668716025378,
+    roundabout:0.5987768566798091,
+    harbor:0.5408862301475073,
+    swimming-pool:0.6327828268456754,
+    helicopter:0.520876881636372
+
+The submitted information is :
+
+Description: RetinaNet_DOTA_1x_20190607_108w
+Username: yangxue
+Institute: DetectionTeamUCAS
+Emailadress: yangxue16@mails.ucas.ac.cn
+TeamMembers: yangxue, yangjirui
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20191106'
-NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
+VERSION = 'RetinaNet_DOTA_1x_20190607'
+NET_NAME = 'resnet152_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
 # ---------------------------------------- System_config
@@ -48,8 +76,8 @@ MUTILPY_BIAS_GRADIENT = 2.0  # if None, will not multipy
 GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
-REG_WEIGHT = 1.0 / 5.0
-REG_LOSS_MODE = 1
+REG_WEIGHT = 1.0
+REG_LOSS_MODE = None
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
@@ -74,7 +102,6 @@ SUBNETS_BIAS_INITIALIZER = tf.constant_initializer(value=0.0)
 PROBABILITY = 0.01
 FINAL_CONV_BIAS_INITIALIZER = tf.constant_initializer(value=-math.log((1.0 - PROBABILITY) / PROBABILITY))
 WEIGHT_DECAY = 1e-4
-USE_GN = False
 
 # ---------------------------------------------Anchor config
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
@@ -87,7 +114,7 @@ ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
 METHOD = 'H'
 USE_ANGLE_COND = False
-ANGLE_RANGE = 180  # or 90
+ANGLE_RANGE = 90  # or 180
 
 # --------------------------------------------RPN config
 SHARE_NET = True
@@ -100,4 +127,5 @@ NMS_IOU_THRESHOLD = 0.1
 MAXIMUM_DETECTIONS = 100
 FILTERED_SCORE = 0.05
 VIS_SCORE = 0.4
+
 
