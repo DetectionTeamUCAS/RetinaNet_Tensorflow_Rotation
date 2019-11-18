@@ -14,7 +14,7 @@
 |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 61.94 | - | R | smooth L1 | 90 | 1x | No | 1X GeForce RTX 2080 Ti | 1 | cfgs_res50_dota_v1.py |
 | RetinaNet (baseline) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.25 | - | R | smooth L1 | 90 | **2x** | No | **8X** GeForce RTX 2080 Ti | 1 | cfgs_res50_dota_v10.py |
-| RetinaNet | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 62.69 | - | R | **iou-smooth L1** | 90 | 1x | No | 1X GeForce RTX 2080 Ti | 1 | cfgs_res50_dota_v5.py |    
+| RetinaNet | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 68.65 | [model](https://drive.google.com/file/d/17RLZK0CwIgqtCAnifa0huWCa3EAaTw_l/view?usp=sharing) | R | [**iou-smooth L1**](https://arxiv.org/abs/1811.07126) | 90 | 1x | No | 1X GeForce RTX 2080 Ti | 1 | cfgs_res50_dota_v5.py |    
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | [R<sup>3</sup>Det](https://github.com/SJTU-Det/R3Det_Tensorflow) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 66.31 | -  | H + R | smooth L1 | 90 | 2x | No | 4X GeForce RTX 2080 Ti | 1 | - |
 | [R<sup>3</sup>Det*](https://github.com/SJTU-Det/R3Det_Tensorflow) | ResNet50_v1 600->800 | DOTA1.0 trainval | DOTA1.0 test | 67.20 | -  | H + R | smooth L1 | 90 | 2x | No | 8X GeForce RTX 2080 Ti | 1 | - |

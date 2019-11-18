@@ -7,33 +7,33 @@ import math
 """
 v1 + iou-smooth l1 loss
 
-This is your evaluation result for task 1:
+This is your result for task 1:
 
-    mAP: 0.6268548346359429
+    mAP: 0.6865042123662575
     ap of each class:
-    plane:0.8895825055572971,
-    baseball-diamond:0.7073737982937115,
-    bridge:0.3381533779272945,
-    ground-track-field:0.5521961704033014,
-    small-vehicle:0.6609319727158001,
-    large-vehicle:0.7426839559004066,
-    ship:0.7579255726899046,
-    tennis-court:0.9088181136193141,
-    basketball-court:0.7689951749127535,
-    storage-tank:0.7528551753726186,
-    soccer-ball-field:0.44336695504841234,
-    roundabout:0.5975627198652913,
-    harbor:0.5372426737549206,
-    swimming-pool:0.580320559526996,
-    helicopter:0.16481379395112153
+    plane:0.8927147077745269,
+    baseball-diamond:0.7492970898148702,
+    bridge:0.37007353028918566,
+    ground-track-field:0.6449465712810265,
+    small-vehicle:0.6599911133902283,
+    large-vehicle:0.7587068066355522,
+    ship:0.7775055465600569,
+    tennis-court:0.9075607666719274,
+    basketball-court:0.8034725262940876,
+    storage-tank:0.8031338766673758,
+    soccer-ball-field:0.5474562520832246,
+    roundabout:0.6117248850866749,
+    harbor:0.6106856141552955,
+    swimming-pool:0.6478476354811812,
+    helicopter:0.5124462633086478
 
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190531_54w
-Username: DetectionTeamCSU
-Institute: CSU
-Emailadress: yangxue@csu.edu.cn
-TeamMembers: YangXue
+Description: RetinaNet_DOTA_1x_20190531_56.7w
+Username: liuqingiqng
+Institute: Central South University
+Emailadress: liuqingqing@csu.edu.cn
+TeamMembers: liuqingqing
 
 """
 
