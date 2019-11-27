@@ -38,11 +38,12 @@ More results and trained models are available in the [MODEL_ZOO.md](MODEL_ZOO.md
 ![2](demo2.png)
 
 ## My Development Environment
+**docker images: docker pull yangxue2docker/yx-tf-det:tensorflow1.13.1-cuda10-gpu-py3**      
 1、python3.5 (anaconda recommend)               
-2、cuda 9.0                     
+2、cuda 10.0                     
 3、[opencv(cv2)](https://pypi.org/project/opencv-python/)       
 4、[tfplot 0.2.0](https://github.com/wookayin/tensorflow-plot) (optional)            
-5、tensorflow 1.12       
+5、tensorflow 1.13       
               
 ## IoU-smooth L1 Loss
 **[SCRDet: Towards More Robust Detection for Small, Cluttered and Rotated Objects (ICCV2019)](https://arxiv.org/abs/1811.07126)**    

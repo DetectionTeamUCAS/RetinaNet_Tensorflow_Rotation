@@ -5,7 +5,33 @@ import tensorflow as tf
 import math
 
 """
+This is your result for task 1:
 
+    mAP: 0.6276150206677873
+    ap of each class:
+    plane:0.8870014421735071,
+    baseball-diamond:0.705325371100668,
+    bridge:0.32269463142075816,
+    ground-track-field:0.6392568489085992,
+    small-vehicle:0.6464182762763873,
+    large-vehicle:0.7101301530966344,
+    ship:0.6862044731417514,
+    tennis-court:0.9032288696055735,
+    basketball-court:0.7489848430301138,
+    storage-tank:0.7666316830070047,
+    soccer-ball-field:0.47762755855141725,
+    roundabout:0.5789849516428702,
+    harbor:0.5351731784765689,
+    swimming-pool:0.5525642677310019,
+    helicopter:0.2539987618539514
+
+The submitted information is :
+
+Description: RetinaNet_DOTA_1x_20190527_54w
+Username: SJTU-Det
+Institute: SJTU
+Emailadress: yangxue-2019-sjtu@sjtu.edu.cn
+TeamMembers: yangxue
 
 """
 

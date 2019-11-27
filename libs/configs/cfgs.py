@@ -5,40 +5,39 @@ import tensorflow as tf
 import math
 
 """
-v1 + iou-smooth l1 loss
-
+v3 + single gpu
 This is your result for task 1:
 
-    mAP: 0.6865042123662575
+    mAP: 0.6317708176766469
     ap of each class:
-    plane:0.8927147077745269,
-    baseball-diamond:0.7492970898148702,
-    bridge:0.37007353028918566,
-    ground-track-field:0.6449465712810265,
-    small-vehicle:0.6599911133902283,
-    large-vehicle:0.7587068066355522,
-    ship:0.7775055465600569,
-    tennis-court:0.9075607666719274,
-    basketball-court:0.8034725262940876,
-    storage-tank:0.8031338766673758,
-    soccer-ball-field:0.5474562520832246,
-    roundabout:0.6117248850866749,
-    harbor:0.6106856141552955,
-    swimming-pool:0.6478476354811812,
-    helicopter:0.5124462633086478
+    plane:0.8852653294283945,
+    baseball-diamond:0.7498262295051162,
+    bridge:0.41145566588430577,
+    ground-track-field:0.6776071064117907,
+    small-vehicle:0.5374548529638528,
+    large-vehicle:0.48302905195645396,
+    ship:0.5591965949336322,
+    tennis-court:0.9018964535303656,
+    basketball-court:0.8126298860759724,
+    storage-tank:0.7912348207016853,
+    soccer-ball-field:0.5282200549286691,
+    roundabout:0.6197750079280963,
+    harbor:0.55768062609549,
+    swimming-pool:0.5671700322865507,
+    helicopter:0.3941205525193267
 
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190531_56.7w
-Username: liuqingiqng
-Institute: Central South University
-Emailadress: liuqingqing@csu.edu.cn
-TeamMembers: liuqingqing
+Description: RetinaNet_DOTA_1x_20190530_54w
+Username: DetectionTeamCSU
+Institute: CSU
+Emailadress: yangxue@csu.edu.cn
+TeamMembers: YangXue
 
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190531'
+VERSION = 'RetinaNet_DOTA_1x_20190530'
 NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
@@ -76,16 +75,16 @@ MUTILPY_BIAS_GRADIENT = 2.0  # if None, will not multipy
 GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
-REG_WEIGHT = 1.0
-REG_LOSS_MODE = 0
+REG_WEIGHT = 1.0 / 5.0
+REG_LOSS_MODE = None
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
 MOMENTUM = 0.9
-LR = 5e-4  # * NUM_GPU * BATCH_SIZE
+LR = 5e-4
 DECAY_STEP = [SAVE_WEIGHTS_INTE*12, SAVE_WEIGHTS_INTE*16, SAVE_WEIGHTS_INTE*20]
 MAX_ITERATION = SAVE_WEIGHTS_INTE*20
-WARM_SETP = int(1.0 / 8.0 * SAVE_WEIGHTS_INTE)
+WARM_SETP = int(1.0 / 4.0 * SAVE_WEIGHTS_INTE)
 
 # -------------------------------------------- Data_preprocess_config
 DATASET_NAME = 'DOTA'  # 'pascal', 'coco'
@@ -109,11 +108,11 @@ LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
 BASE_ANCHOR_SIZE_LIST = [32, 64, 128, 256, 512]
 ANCHOR_STRIDE = [8, 16, 32, 64, 128]
 ANCHOR_SCALES = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
-ANCHOR_RATIOS = [1, 1 / 3., 3., 5., 1 / 5.]
+ANCHOR_RATIOS = [1, 1 / 2, 2., 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
 ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
-METHOD = 'R'
+METHOD = 'H'
 USE_ANGLE_COND = False
 ANGLE_RANGE = 90  # or 180
 

@@ -63,6 +63,8 @@ def worker(gpu_id, images, det_net, args, result_queue):
             print('restore model %d ...' % gpu_id)
 
         for img_path in images:
+            # if 'P2043' not in img_path:
+            #     continue
             img = cv2.imread(img_path)
 
             box_res_rotate = []
