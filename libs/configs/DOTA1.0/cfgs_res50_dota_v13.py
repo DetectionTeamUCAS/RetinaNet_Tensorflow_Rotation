@@ -5,48 +5,46 @@ import tensorflow as tf
 import math
 
 """
-v8 + resnet152
+v5 repeat
+This is your result for task 1:
 
-This is your evaluation result for task 1:
-
-    mAP: 0.6579429843928571
+    mAP: 0.6887560239475758
     ap of each class:
-    plane:0.893503785252709,
-    baseball-diamond:0.7522990449456908,
-    bridge:0.4225903314724291,
-    ground-track-field:0.6176259567961212,
-    small-vehicle:0.665437258817552,
-    large-vehicle:0.5675280986867499,
-    ship:0.6577197671665636,
-    tennis-court:0.9081239749973251,
-    basketball-court:0.7968397419973662,
-    storage-tank:0.7810871388484488,
-    soccer-ball-field:0.5130668716025378,
-    roundabout:0.5987768566798091,
-    harbor:0.5408862301475073,
-    swimming-pool:0.6327828268456754,
-    helicopter:0.520876881636372
+    plane:0.8940529652135962,
+    baseball-diamond:0.7474486698392037,
+    bridge:0.3643166649129069,
+    ground-track-field:0.662924268693916,
+    small-vehicle:0.6616918317735657,
+    large-vehicle:0.7637966336747759,
+    ship:0.7775309381402764,
+    tennis-court:0.907857598484631,
+    basketball-court:0.8105264053192953,
+    storage-tank:0.8012307433913947,
+    soccer-ball-field:0.5642786809836354,
+    roundabout:0.6258372702184064,
+    harbor:0.6188599073641682,
+    swimming-pool:0.6492325004864525,
+    helicopter:0.4817552807174126
 
 The submitted information is :
 
-Description: RetinaNet_DOTA_1x_20190607_108w
-Username: yangxue
-Institute: DetectionTeamUCAS
-Emailadress: yangxue16@mails.ucas.ac.cn
-TeamMembers: yangxue, yangjirui
-
+Description: RetinaNet_DOTA_1x_20191119_54w
+Username: liuqingiqng
+Institute: Central South University
+Emailadress: liuqingqing@csu.edu.cn
+TeamMembers: liuqingqing
 """
 
 # ------------------------------------------------
-VERSION = 'RetinaNet_DOTA_1x_20190607'
-NET_NAME = 'resnet152_v1d'  # 'MobilenetV2'
+VERSION = 'RetinaNet_DOTA_1x_20191119'
+NET_NAME = 'resnet50_v1d'  # 'MobilenetV2'
 ADD_BOX_IN_TENSORBOARD = True
 
 # ---------------------------------------- System_config
 ROOT_PATH = os.path.abspath('../')
 print(20*"++--")
 print(ROOT_PATH)
-GPU_GROUP = "1"
+GPU_GROUP = "0"
 NUM_GPU = len(GPU_GROUP.strip().split(','))
 SHOW_TRAIN_INFO_INTE = 20
 SMRY_ITER = 200
@@ -77,15 +75,15 @@ GRADIENT_CLIPPING_BY_NORM = 10.0  # if None, will not clip
 
 CLS_WEIGHT = 1.0
 REG_WEIGHT = 1.0
-REG_LOSS_MODE = None
+REG_LOSS_MODE = 0
 
 BATCH_SIZE = 1
 EPSILON = 1e-5
 MOMENTUM = 0.9
-LR = 5e-4
+LR = 5e-4  # * NUM_GPU * BATCH_SIZE
 DECAY_STEP = [SAVE_WEIGHTS_INTE*12, SAVE_WEIGHTS_INTE*16, SAVE_WEIGHTS_INTE*20]
 MAX_ITERATION = SAVE_WEIGHTS_INTE*20
-WARM_SETP = int(1.0 / 4.0 * SAVE_WEIGHTS_INTE)
+WARM_SETP = int(1.0 / 8.0 * SAVE_WEIGHTS_INTE)
 
 # -------------------------------------------- Data_preprocess_config
 DATASET_NAME = 'DOTA'  # 'pascal', 'coco'
@@ -102,17 +100,18 @@ SUBNETS_BIAS_INITIALIZER = tf.constant_initializer(value=0.0)
 PROBABILITY = 0.01
 FINAL_CONV_BIAS_INITIALIZER = tf.constant_initializer(value=-math.log((1.0 - PROBABILITY) / PROBABILITY))
 WEIGHT_DECAY = 1e-4
+USE_GN = False
 
 # ---------------------------------------------Anchor config
 LEVEL = ['P3', 'P4', 'P5', 'P6', 'P7']
 BASE_ANCHOR_SIZE_LIST = [32, 64, 128, 256, 512]
 ANCHOR_STRIDE = [8, 16, 32, 64, 128]
 ANCHOR_SCALES = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
-ANCHOR_RATIOS = [1, 1 / 2, 2., 1 / 3., 3., 5., 1 / 5.]
+ANCHOR_RATIOS = [1, 1 / 3., 3., 5., 1 / 5.]
 ANCHOR_ANGLES = [-90, -75, -60, -45, -30, -15]
 ANCHOR_SCALE_FACTORS = None
 USE_CENTER_OFFSET = True
-METHOD = 'H'
+METHOD = 'R'
 USE_ANGLE_COND = False
 ANGLE_RANGE = 90  # or 180
 
