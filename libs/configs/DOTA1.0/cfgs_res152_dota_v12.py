@@ -7,33 +7,33 @@ import math
 """
 v8 + resnet152
 
-This is your evaluation result for task 1:
+This is your result for task 1:
 
-    mAP: 0.6579429843928571
+    mAP: 0.6697307037905941
     ap of each class:
-    plane:0.893503785252709,
-    baseball-diamond:0.7522990449456908,
-    bridge:0.4225903314724291,
-    ground-track-field:0.6176259567961212,
-    small-vehicle:0.665437258817552,
-    large-vehicle:0.5675280986867499,
-    ship:0.6577197671665636,
-    tennis-court:0.9081239749973251,
-    basketball-court:0.7968397419973662,
-    storage-tank:0.7810871388484488,
-    soccer-ball-field:0.5130668716025378,
-    roundabout:0.5987768566798091,
-    harbor:0.5408862301475073,
-    swimming-pool:0.6327828268456754,
-    helicopter:0.520876881636372
+    plane:0.8882735914793168,
+    baseball-diamond:0.7513245658981321,
+    bridge:0.46795057679087626,
+    ground-track-field:0.6459954514500926,
+    small-vehicle:0.5953920699767127,
+    large-vehicle:0.5129022056709118,
+    ship:0.6420297920157385,
+    tennis-court:0.9062458739470556,
+    basketball-court:0.828333927568995,
+    storage-tank:0.8002814129025729,
+    soccer-ball-field:0.5863590067393616,
+    roundabout:0.6003195589374304,
+    harbor:0.5691318302845675,
+    swimming-pool:0.6889947039065873,
+    helicopter:0.5624259892905619
 
 The submitted information is :
 
 Description: RetinaNet_DOTA_1x_20190607_108w
-Username: yangxue
-Institute: DetectionTeamUCAS
-Emailadress: yangxue16@mails.ucas.ac.cn
-TeamMembers: yangxue, yangjirui
+Username: DetectionTeamCSU
+Institute: CSU
+Emailadress: yangxue@csu.edu.cn
+TeamMembers: YangXue
 
 """
 
