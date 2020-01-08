@@ -74,7 +74,7 @@ def enum_ratios_and_thetas(anchors, anchor_ratios, anchor_angles):
     ws = tf.reshape(ws, [-1, 1])
     hs = tf.reshape(hs, [-1, 1])
 
-    return hs, ws, anchor_angles
+    return ws, hs, anchor_angles
 
 
 if __name__ == '__main__':
