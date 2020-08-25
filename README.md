@@ -3,10 +3,8 @@
 ## Abstract
 This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/pdf/1708.02002.pdf), and it is completed by [YangXue](https://github.com/yangxue0827).
 
-This is the baseline work of R<sup>3</sup>Det, paper link: [R<sup>3</sup>Det: Refined Single-Stage Detector with Feature Refinement for Rotating Object](https://arxiv.org/abs/1908.05612).
-
 ## Performance
-More results and trained models are available in the [MODEL_ZOO.md](MODEL_ZOO.md).
+**Due to the improvement of the code, the performance of this repo is gradually improving, so the experimental results in this file are for reference only.**
 ### DOTA1.0
 | Model |    Backbone    |    Training data    |    Val data    |    mAP   | Model Link | Anchor | Reg. Loss| Angle Range | lr schd | Data Augmentation | GPU | Image/GPU | Configs |      
 |:------------:|:------------:|:------------:|:---------:|:-----------:|:----------:|:-----------:|:-----------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|    

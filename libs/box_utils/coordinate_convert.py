@@ -45,6 +45,11 @@ def backward_convert(coordinate, with_label=True):
             rect1 = cv2.minAreaRect(box)
 
             x, y, w, h, theta = rect1[0][0], rect1[0][1], rect1[1][0], rect1[1][1], rect1[2]
+
+            if theta == 0:
+                w, h = h, w
+                theta -= 90
+
             boxes.append([x, y, w, h, theta, rect[-1]])
 
     else:
@@ -54,6 +59,11 @@ def backward_convert(coordinate, with_label=True):
             rect1 = cv2.minAreaRect(box)
 
             x, y, w, h, theta = rect1[0][0], rect1[0][1], rect1[1][0], rect1[1][1], rect1[2]
+
+            if theta == 0:
+                w, h = h, w
+                theta -= 90
+
             boxes.append([x, y, w, h, theta])
 
     return np.array(boxes, dtype=np.float32)

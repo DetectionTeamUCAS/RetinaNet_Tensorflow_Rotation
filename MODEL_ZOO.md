@@ -1,7 +1,9 @@
 # Focal Loss for Dense Rotation Object Detection
 
-## Performance
+## Performance（deprecated） 
+
 **Due to the improvement of the code, the performance of this repo is gradually improving, so the experimental results in this file are for reference only.**
+
 ### DOTA1.0
 | Model |    Backbone    |    Training data    |    Val data    |    mAP   | Model Link | Anchor | Reg. Loss| Angle Range | lr schd | Data Augmentation | GPU | Image/GPU | Configs |      
 |:------------:|:------------:|:------------:|:---------:|:-----------:|:----------:|:-----------:|:-----------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|    
