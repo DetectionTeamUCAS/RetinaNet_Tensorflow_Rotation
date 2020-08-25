@@ -1,7 +1,9 @@
 # Focal Loss for Dense Rotation Object Detection
 
 ## Abstract
-This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/pdf/1708.02002.pdf), and it is completed by [YangXue](https://github.com/yangxue0827).
+This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/pdf/1708.02002.pdf), and it is completed by [YangXue](https://github.com/yangxue0827).    
+
+**Notice: This repo has basically stopped updating, please refer to [new repo](https://github.com/Thinklab-SJTU/R3Det_Tensorflow) for the latest progress.**
 
 ## Performance
 **Due to the improvement of the code, the performance of this repo is gradually improving, so the experimental results in this file are for reference only.**
@@ -105,3 +107,6 @@ tensorboard --logdir=.
 2、https://github.com/zengarden/light_head_rcnn   
 3、https://github.com/tensorflow/models/tree/master/research/object_detection    
 4、https://github.com/fizyr/keras-retinanet     
+
+
+
