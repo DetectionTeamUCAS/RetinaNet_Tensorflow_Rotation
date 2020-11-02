@@ -3,6 +3,8 @@
 ## Abstract
 This repo is based on [Focal Loss for Dense Object Detection](https://arxiv.org/pdf/1708.02002.pdf), and it is completed by [YangXue](https://github.com/yangxue0827).    
 
+**We also recommend a tensorflow-based [rotation detection benchmark](https://github.com/yangxue0827/RotationDetection), which is led by [YangXue](https://yangxue0827.github.io/).**
+
 ## Performance
 ### DOTA1.0
 | Model |    Backbone    |    Training data    |    Val data    |    mAP   | Model Link | Anchor | Reg. Loss| Angle Range | lr schd | Data Augmentation | GPU | Image/GPU | Configs |      
@@ -85,12 +87,14 @@ cd $PATH_ROOT/tools
 python multi_gpu_train.py
 ```
 
-## Eval
+## Test
 ```  
 cd $PATH_ROOT/tools
 python test_dota.py --test_dir='/PATH/TO/IMAGES/'  
                     --gpus=0,1,2,3,4,5,6,7          
 ``` 
+
+**Notice: In order to set the breakpoint conveniently, the read and write mode of the file is' a+'. If the model of the same #VERSION needs to be tested again, the original test results need to be deleted.**      
 
 ## Tensorboard
 ```  
